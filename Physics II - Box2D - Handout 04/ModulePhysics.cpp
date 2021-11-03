@@ -32,100 +32,7 @@ bool ModulePhysics::Start()
 	world->SetContactListener(this);
 
 	// needed to create joints like mouse joint
-	b2BodyDef bd;
-	ground = world->CreateBody(&bd);
-
-	// big static circle as "ground" in the middle of the screen
-	int x = SCREEN_WIDTH / 2;
-	int y = SCREEN_HEIGHT / 1.5f;
-	int diameter = SCREEN_WIDTH / 2;
-
-	b2BodyDef body;
-	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
-	b2Body* big_ball = world->CreateBody(&body);
-
-	b2CircleShape shape;
-	shape.m_radius = PIXEL_TO_METERS(diameter) * 0.5f;
-
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-	big_ball->CreateFixture(&fixture);
-
-	b2BodyDef body2;
-	body2.type= b2_staticBody;
-	body2.position.Set(0,0);
-
-	b2Body* borde = world->CreateBody(&body2);
-
-	b2ChainShape shape2;
-	b2Vec2 vertices[55];
-	vertices[0].Set(1.0f, 1.0f);
-	vertices[1].Set(1.0f, 430.0f);
-	vertices[2].Set(100.0f,430.0f);
-	vertices[3].Set(100.0f, 427.0f);
-	vertices[4].Set(40.0f, 390.0f);
-	vertices[5].Set(40.0f, 405.0f);
-	vertices[6].Set(22.0f, 320.0f);
-	vertices[7].Set(40.0f, 320.0f);
-	vertices[8].Set(40.0f, 295.0f);
-	vertices[9].Set(30.0f, 280.0f);
-	vertices[10].Set(20.0f, 260.0f);
-	vertices[11].Set(15.0f, 240.0f);
-	vertices[12].Set(10.0f, 210.0f);
-	vertices[13].Set(10.0f, 190.0f);
-	vertices[14].Set(10.0f, 145.0f);
-	vertices[15].Set(15.0f, 115.0f);
-	vertices[16].Set(20.0f, 95.0f);
-	vertices[17].Set(30.0f, 80.0f);
-	vertices[18].Set(50.0f, 60.0f);
-	vertices[19].Set(70.0f, 50.0f);
-	vertices[20].Set(85.0f, 45.0f);
-	vertices[21].Set(95.0f, 40.0f);
-	vertices[22].Set(120.0f, 30.0f);
-	vertices[23].Set(145.0f, 25.0f);
-	vertices[24].Set(165.0f, 25.0f);
-	vertices[25].Set(225.0f, 25.0f);
-	vertices[26].Set(235.0f, 30.0f);
-	vertices[27].Set(245.0f, 40.0f);
-	vertices[28].Set(252.0f, 60.0f);
-	vertices[29].Set(252.0f, 415.0f);
-	vertices[30].Set(235.0f, 415.0f);
-	vertices[31].Set(235.0f, 70.0f);
-	vertices[32].Set(220.0f, 50.0f);
-	vertices[33].Set(200.0f, 50.0f);
-	vertices[34].Set(175.0f, 45.0f);
-	vertices[35].Set(130.0f, 50.0f);
-	vertices[36].Set(155.0f, 70.0f);
-	vertices[37].Set(175.0f, 75.0f);
-	vertices[38].Set(190.0f, 85.0f);
-	vertices[39].Set(205.0f, 100.0f);
-	vertices[40].Set(220.0f, 120.0f);
-	vertices[41].Set(230.0f, 145.0f);
-	vertices[42].Set(225.0f, 220.0f);
-	vertices[43].Set(220.0f, 255.0f);
-	vertices[44].Set(205.0f, 280.0f);
-	vertices[45].Set(195.0f, 293.0f);
-	vertices[46].Set(195.0f, 320.0f);
-	vertices[47].Set(220.0f, 315.0f);
-	vertices[48].Set(220.0f, 405.0f);
-	vertices[49].Set(200.0f, 405.0f);
-	vertices[50].Set(200.0f, 390.0f);
-	vertices[51].Set(140.0f, 425.0f);
-	vertices[52].Set(140.0f, 430.0f);
-	vertices[53].Set(255.0f, 430.0f);
-	vertices[54].Set(255.0f, 1.0f);
 	
-	//vertices[].Set(.0f, .0f);
-	b2ChainShape chain;
-	chain.CreateLoop(vertices, 55);
-
-
-	b2FixtureDef fixture2;
-	fixture2.shape = &chain;
-	borde->CreateFixture(&fixture);
-
 	return true;
 }
 
@@ -171,8 +78,6 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 
 	return pbody;
 }
-
-
 
 PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 {
@@ -229,39 +134,6 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
-	b2Body* b = world->CreateBody(&body);
-
-	b2ChainShape shape;
-	b2Vec2* p = new b2Vec2[size / 2];
-
-	for(uint i = 0; i < size / 2; ++i)
-	{
-		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
-		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
-	}
-
-	shape.CreateLoop(p, size / 2);
-
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-
-	b->CreateFixture(&fixture);
-
-	delete p;
-
-	PhysBody* pbody = new PhysBody();
-	pbody->body = b;
-	b->SetUserData(pbody);
-	pbody->width = pbody->height = 0;
-
-	return pbody;
-}
-PhysBody* ModulePhysics::CreateChain2(int x, int y, int* points, int size)
-{
-	b2BodyDef body;
 	body.type = b2_staticBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
@@ -270,7 +142,7 @@ PhysBody* ModulePhysics::CreateChain2(int x, int y, int* points, int size)
 	b2ChainShape shape;
 	b2Vec2* p = new b2Vec2[size / 2];
 
-	for (uint i = 0; i < size / 2; ++i)
+	for(uint i = 0; i < size / 2; ++i)
 	{
 		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
 		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
