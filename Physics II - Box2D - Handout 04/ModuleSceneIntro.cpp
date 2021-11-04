@@ -35,6 +35,9 @@ bool ModuleSceneIntro::Start()
 	hitboxa.add(App->physics->CreateChain(0, 0, hitbox3, 38));
 	hitboxb.add(App->physics->CreateChain(0, 0, hitbox4, 20));
 	hitboxc.add(App->physics->CreateChain(0, 0, hitbox5, 16));
+	hitboxd.add(App->physics->CreateChain(0, 0, hitbox6, 70));
+	hitboxe.add(App->physics->CreateChain(0, 0, hitbox7, 8));
+	hitboxf.add(App->physics->CreateChain(0, 0, hitbox8, 8));
 	return ret;
 }
 
