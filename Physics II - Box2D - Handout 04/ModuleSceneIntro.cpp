@@ -31,7 +31,7 @@ bool ModuleSceneIntro::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
-	hitbox.add(App->physics->CreateChain(0, 0, hitbox1, 146));
+	hitbox.add(App->physics->CreateChain(0, 0, hitbox2, 166));
 	return ret;
 }
 
