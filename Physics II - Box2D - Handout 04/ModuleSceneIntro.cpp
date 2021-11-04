@@ -32,6 +32,9 @@ bool ModuleSceneIntro::Start()
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 	hitbox.add(App->physics->CreateChain(0, 0, hitbox2, 166));
+	hitboxa.add(App->physics->CreateChain(0, 0, hitbox3, 38));
+	hitboxb.add(App->physics->CreateChain(0, 0, hitbox4, 20));
+	hitboxc.add(App->physics->CreateChain(0, 0, hitbox5, 16));
 	return ret;
 }
 
@@ -55,7 +58,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 6));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 8));
 		circles.getLast()->data->listener = this;
 	}
 

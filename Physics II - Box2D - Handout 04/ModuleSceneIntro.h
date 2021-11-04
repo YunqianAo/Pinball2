@@ -21,7 +21,9 @@ public:
 	p2List<PhysBody*> circles;
 	
 	p2List<PhysBody*> hitbox;
-
+	p2List<PhysBody*> hitboxa;
+	p2List<PhysBody*> hitboxb;
+	p2List<PhysBody*> hitboxc;
 	PhysBody* sensor;
 	bool sensed;
 
@@ -31,7 +33,49 @@ public:
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
-
+	int hitbox5[16] = {
+	190, 338,
+	189, 361,
+	184, 368,
+	146, 394,
+	150, 398,
+	192, 370,
+	194, 361,
+	195, 337
+	};
+	int hitbox4[20] = {
+	42, 338,
+	41, 347,
+	41, 354,
+	41, 364,
+	41, 372,
+	84, 398,
+	88, 393,
+	51, 369,
+	48, 363,
+	47, 336
+	};
+	int hitbox3[38] = {
+	41, 90,
+	44, 84,
+	50, 78,
+	56, 72,
+	63, 67,
+	71, 63,
+	79, 59,
+	91, 57,
+	102, 57,
+	113, 57,
+	122, 62,
+	130, 67,
+	117, 65,
+	106, 64,
+	96, 64,
+	82, 67,
+	66, 74,
+	57, 77,
+	44, 87
+	};
 	// Pivot 0, 0
 	int hitbox2[166] = {
 		0, -1,
