@@ -31,8 +31,57 @@ bool ModulePhysics::Start()
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
 	world->SetContactListener(this);
 
-	// needed to create joints like mouse joint
-	
+	//Dynamic rectangle that works as a propeller
+
+	b2BodyDef body_def;
+	body_def.type = b2_dynamicBody;
+	body_def.position.Set(PIXEL_TO_METERS(244), PIXEL_TO_METERS(200));
+
+	//This is the box that impulses the ball
+	b2Body* propeller = world->CreateBody(&body_def);
+
+	b2PolygonShape box;
+	box.SetAsBox(PIXEL_TO_METERS(20) * 0.5f, PIXEL_TO_METERS(20) * 0.5f);
+
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	propeller->CreateFixture(&fixture);
+
+	//Static rectangle that works as an anchor of the propeller body
+
+	b2BodyDef base;
+	base.type = b2_staticBody;
+	base.position.Set(PIXEL_TO_METERS(244), PIXEL_TO_METERS(370));
+
+	//This is the box that limites the propeller movement
+	b2Body* propellerbase = world->CreateBody(&base);
+
+	b2PolygonShape anchor;
+	anchor.SetAsBox(PIXEL_TO_METERS(20) * 0.5f, PIXEL_TO_METERS(20) * 0.5f);
+
+	b2FixtureDef fixture2;
+	fixture2.shape = &anchor;
+	propellerbase->CreateFixture(&fixture2);
+
+	//Prismatic joint to chain the propeller with the propellerbase
+
+
+	b2PrismaticJointDef prismaticJointDef;
+	prismaticJointDef.bodyA = propeller;
+	prismaticJointDef.bodyB = propellerbase;
+	prismaticJointDef.localAxisA.Set(0, 1);
+	prismaticJointDef.localAxisA.Normalize();
+
+	prismaticJointDef.localAnchorA.Set(0, 0);
+	prismaticJointDef.localAnchorB.Set(0, 0);
+
+	prismaticJointDef.enableLimit = true;
+	prismaticJointDef.lowerTranslation = 10;
+	prismaticJointDef.upperTranslation = 10;
+
+
+	world->CreateJoint(&prismaticJointDef);
+
 	return true;
 }
 
