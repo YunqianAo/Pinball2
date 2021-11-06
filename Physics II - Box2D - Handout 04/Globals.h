@@ -20,6 +20,11 @@ enum update_status
 	UPDATE_ERROR
 };
 
+enum sensor_detector {
+	ON = 0x0001,
+	OFF = 0x0002, DISABLE = 0x0004
+};
+
 // Configuration -----------
 #define SCREEN_WIDTH 254
 #define SCREEN_HEIGHT 426

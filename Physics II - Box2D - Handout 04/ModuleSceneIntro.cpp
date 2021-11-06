@@ -52,6 +52,29 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+	graphics = App->textures->Load("pinball/Ball_PNG.png");
+	App->renderer->Blit(background, 0, 0, NULL, 1.0f);
+
+	if (createball == true)
+	{
+		player = App->physics->CreateCircle(245, 380, 7);
+		player->listener = App->scene_intro;
+		b2Filter b;
+		b.categoryBits = ON;
+		b.maskBits = ON | OFF;
+		player->body->GetFixtureList()->SetFilterData(b);
+		createball = false;
+	}
+	player->body->SetBullet(true);
+
+	if ((player->body->GetPosition().x > 364) && (player->body->GetPosition().y > 280)) //sets restitution only if ball has departed
+	{
+		player->body->GetFixtureList()->SetRestitution(0.3);
+	}
+
+	int playerPositionX, playerPositionY;
+	player->GetPosition(playerPositionX, playerPositionY);
+	App->renderer->Blit(graphics, playerPositionX, playerPositionY, NULL, 1.0f, player->GetRotation());
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
@@ -80,7 +103,7 @@ update_status ModuleSceneIntro::Update()
 
 	// All draw functions ------------------------------------------------------
 	p2List_item<PhysBody*>* c = circles.getFirst();
-	App->renderer->Blit(background, 0, 0, NULL, 1.0f);
+	
 	while(c != NULL)
 	{
 		int x, y;

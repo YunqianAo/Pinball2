@@ -16,6 +16,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	PhysBody* player;
 
 public:
 	p2List<PhysBody*> circles;
@@ -32,6 +33,8 @@ public:
 
 	SDL_Texture* background;
     SDL_Texture* circle;
+	SDL_Texture* graphics = nullptr;
+	bool createball = true;
 	
 	uint bonus_fx;
 	p2Point<int> ray;
