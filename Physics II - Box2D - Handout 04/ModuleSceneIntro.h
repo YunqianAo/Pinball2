@@ -19,7 +19,11 @@ public:
 
 public:
 	p2List<PhysBody*> circles;
+	p2List<PhysBody*> rectangles;
+	p2List<PhysBody*> rectangles2;
 	PhysBody* ball;
+	PhysBody* flickerA;
+	PhysBody* flickerD;
 	
 	p2List<PhysBody*> hitbox;
 	p2List<PhysBody*> hitboxa;
@@ -33,6 +37,7 @@ public:
 
 	SDL_Texture* background;
     SDL_Texture* circle;
+	SDL_Texture* center;
 	
 	uint bonus_fx;
 	p2Point<int> ray;

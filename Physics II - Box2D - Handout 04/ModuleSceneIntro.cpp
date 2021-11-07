@@ -26,7 +26,7 @@ bool ModuleSceneIntro::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	circle = App->textures->Load("pinball/Ball_PNG.png"); 
-	
+	center = App->textures->Load("pinball/poke_center.png");
 	background = App->textures->Load("pinball/fondo.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
@@ -39,7 +39,13 @@ bool ModuleSceneIntro::Start()
 	hitboxe.add(App->physics->CreateChain(0, 0, hitbox7, 8));
 	hitboxf.add(App->physics->CreateChain(0, 0, hitbox8, 8));
 
-	
+	rectangles.add(App->physics->CreateRectangle(103, 403, 25, 7));
+	flickerA = rectangles.getLast()->data;
+
+	rectangles2.add(App->physics->CreateRectangle(130, 403, 25, 7));
+	flickerD = rectangles2.getLast()->data;
+
+
 	circles.add(App->physics->CreateCircle(242, 350, 8));
 	ball = circles.getLast()->data;
 	//circles.getLast()->data->listener = this;
@@ -58,13 +64,33 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	//Flicker A movement
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
-		App->physics->motor = true;
+		flickerA->body->SetAngularVelocity({ -50 });
 		
 	} 
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+	{
+		flickerA->body->SetAngularVelocity({ 0 });
 
+	}
+
+	//Flicker D movement
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
+		flickerD->body->SetAngularVelocity({ 50 });
+
+	}
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+	{
+		flickerD->body->SetAngularVelocity({ 0 });
+
+	}
+
+	//Propeller movement
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ball->body->ApplyForceToCenter({0, -55}, true);
@@ -100,6 +126,7 @@ update_status ModuleSceneIntro::Update()
 	// All draw functions ------------------------------------------------------
 	p2List_item<PhysBody*>* c = circles.getFirst();
 	App->renderer->Blit(background, 0, 0, NULL, 1.0f);
+	App->renderer->Blit(center, 160, 16, NULL, 1.0f);
 
 	while(c != NULL)
 	{
