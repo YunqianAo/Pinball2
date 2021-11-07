@@ -33,9 +33,14 @@ public:
 
 	SDL_Texture* background;
     SDL_Texture* circle;
+	SDL_Texture* kickerD;
+	SDL_Texture* kickerI;
 	SDL_Texture* graphics = nullptr;
 	bool createball = true;
 	
+	bool kickerIzq = false;
+	bool kickerDer = false;
+
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;

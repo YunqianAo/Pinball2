@@ -30,6 +30,9 @@ bool ModuleSceneIntro::Start()
 	background = App->textures->Load("pinball/fondo.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
+	kickerD = App->textures->Load("pinball/KickerDer.png");
+	kickerI = App->textures->Load("pinball/KickerIzq.png");
+
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 	hitbox.add(App->physics->CreateChain(0, 0, hitbox2, 166));
 	hitboxa.add(App->physics->CreateChain(0, 0, hitbox3, 38));
@@ -111,6 +114,20 @@ update_status ModuleSceneIntro::Update()
 		if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
 			App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
+	}
+
+	if (kickerIzq) {
+		App->renderer->Blit(kickerI, 78, 377, NULL, 0.25, -30);
+	}
+	else {
+		App->renderer->Blit(kickerI, 78, 394, NULL, 0.25, 12);
+	}
+	
+	if (kickerDer) {
+		App->renderer->Blit(kickerD, 120, 377, NULL, 0.25, 30);
+	}
+	else {
+		App->renderer->Blit(kickerD, 120, 394, NULL, 0.25, -12);
 	}
 
 	// ray -----------------
