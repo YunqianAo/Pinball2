@@ -20,6 +20,7 @@ public:
 
 public:
 	p2List<PhysBody*> circles;
+	PhysBody* ball;
 	
 	p2List<PhysBody*> hitbox;
 	p2List<PhysBody*> hitboxa;
