@@ -27,6 +27,7 @@ bool ModuleSceneIntro::Start()
 
 	circle = App->textures->Load("pinball/Ball_PNG.png"); 
 	center = App->textures->Load("pinball/poke_center.png");
+	screen = App->textures->Load("pinball/tv_screen.png");
 	background = App->textures->Load("pinball/fondo.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
@@ -127,6 +128,7 @@ update_status ModuleSceneIntro::Update()
 	p2List_item<PhysBody*>* c = circles.getFirst();
 	App->renderer->Blit(background, 0, 0, NULL, 1.0f);
 	App->renderer->Blit(center, 160, 16, NULL, 1.0f);
+	App->renderer->Blit(screen, 20, 110, NULL, 1.0f);
 
 	while(c != NULL)
 	{

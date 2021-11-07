@@ -38,6 +38,7 @@ public:
 	SDL_Texture* background;
     SDL_Texture* circle;
 	SDL_Texture* center;
+	SDL_Texture* screen;
 	
 	uint bonus_fx;
 	p2Point<int> ray;
