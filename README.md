@@ -18,7 +18,7 @@ Los compañeros y las tareas:
 
 Lista completa:
 Space - propulsor
-A,D - palancas
+A - palancas
 Debugging key - F1
 
 "Exciting" stuff:
