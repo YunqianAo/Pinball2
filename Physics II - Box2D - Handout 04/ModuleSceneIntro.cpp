@@ -30,6 +30,9 @@ bool ModuleSceneIntro::Start()
 	background = App->textures->Load("pinball/fondo.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
+	kickerD = App->textures->Load("pinball/KickerDer.png");
+	kickerI = App->textures->Load("pinball/KickerIzq.png");
+
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 	hitbox.add(App->physics->CreateChain(0, 0, hitbox2, 166));
 	hitboxa.add(App->physics->CreateChain(0, 0, hitbox3, 38));
@@ -58,6 +61,7 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+<<<<<<< HEAD
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
 		App->physics->motor = true;
@@ -71,6 +75,31 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	/*
+=======
+	graphics = App->textures->Load("pinball/Ball_PNG.png");
+	App->renderer->Blit(background, 0, 0, NULL, 1.0f);
+
+	if (createball == true)
+	{
+		player = App->physics->CreateCircle(245, 380, 7);
+		player->listener = App->scene_intro;
+		b2Filter b;
+		b.categoryBits = ON;
+		b.maskBits = ON | OFF;
+		player->body->GetFixtureList()->SetFilterData(b);
+		createball = false;
+	}
+	player->body->SetBullet(true);
+
+	if ((player->body->GetPosition().x > 364) && (player->body->GetPosition().y > 280)) //sets restitution only if ball has departed
+	{
+		player->body->GetFixtureList()->SetRestitution(0.3);
+	}
+
+	int playerPositionX, playerPositionY;
+	player->GetPosition(playerPositionX, playerPositionY);
+	App->renderer->Blit(graphics, playerPositionX, playerPositionY, NULL, 1.0f, player->GetRotation());
+>>>>>>> d27644b5a4b176f133e37aabfe0959df856a0ed5
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
@@ -98,7 +127,7 @@ update_status ModuleSceneIntro::Update()
 
 	// All draw functions ------------------------------------------------------
 	p2List_item<PhysBody*>* c = circles.getFirst();
-	App->renderer->Blit(background, 0, 0, NULL, 1.0f);
+	
 	while(c != NULL)
 	{
 		int x, y;
@@ -106,6 +135,20 @@ update_status ModuleSceneIntro::Update()
 		if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
 			App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
+	}
+
+	if (kickerIzq) {
+		App->renderer->Blit(kickerI, 78, 377, NULL, 0.25, -30);
+	}
+	else {
+		App->renderer->Blit(kickerI, 78, 394, NULL, 0.25, 12);
+	}
+	
+	if (kickerDer) {
+		App->renderer->Blit(kickerD, 120, 377, NULL, 0.25, 30);
+	}
+	else {
+		App->renderer->Blit(kickerD, 120, 394, NULL, 0.25, -12);
 	}
 
 	// ray -----------------
