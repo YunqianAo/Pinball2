@@ -41,12 +41,6 @@ bool ModuleSceneIntro::Start()
 	hitboxd.add(App->physics->CreateChain(0, 0, hitbox6, 70));
 	hitboxe.add(App->physics->CreateChain(0, 0, hitbox7, 8));
 	hitboxf.add(App->physics->CreateChain(0, 0, hitbox8, 8));
-
-	
-	circles.add(App->physics->CreateCircle(242, 350, 8));
-	ball = circles.getLast()->data;
-	//circles.getLast()->data->listener = this;
-
 	return ret;
 }
 
@@ -61,21 +55,6 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-<<<<<<< HEAD
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		App->physics->motor = true;
-		
-	} 
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		ball->body->ApplyForceToCenter({0, -55}, true);
-
-	}
-
-	/*
-=======
 	graphics = App->textures->Load("pinball/Ball_PNG.png");
 	App->renderer->Blit(background, 0, 0, NULL, 1.0f);
 
@@ -99,7 +78,6 @@ update_status ModuleSceneIntro::Update()
 	int playerPositionX, playerPositionY;
 	player->GetPosition(playerPositionX, playerPositionY);
 	App->renderer->Blit(graphics, playerPositionX, playerPositionY, NULL, 1.0f, player->GetRotation());
->>>>>>> d27644b5a4b176f133e37aabfe0959df856a0ed5
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
@@ -107,13 +85,14 @@ update_status ModuleSceneIntro::Update()
 		ray.y = App->input->GetMouseY();
 	}
 
-	*/
-
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 8));
 		circles.getLast()->data->listener = this;
 	}
+
+	
+
 	
 
 	// Prepare for raycast ------------------------------------------------------

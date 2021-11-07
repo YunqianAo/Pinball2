@@ -35,13 +35,13 @@ bool ModulePhysics::Start()
 
 	b2BodyDef body_def;
 	body_def.type = b2_dynamicBody;
-	body_def.position.Set(PIXEL_TO_METERS(242), PIXEL_TO_METERS(300));
+	body_def.position.Set(PIXEL_TO_METERS(244), PIXEL_TO_METERS(200));
 
 	//This is the box that impulses the ball
 	b2Body* propeller = world->CreateBody(&body_def);
 
 	b2PolygonShape box;
-	box.SetAsBox(PIXEL_TO_METERS(14) * 0.5f, PIXEL_TO_METERS(14) * 0.5f);
+	box.SetAsBox(PIXEL_TO_METERS(20) * 0.5f, PIXEL_TO_METERS(20) * 0.5f);
 
 	b2FixtureDef fixture;
 	fixture.shape = &box;
@@ -51,19 +51,20 @@ bool ModulePhysics::Start()
 
 	b2BodyDef base;
 	base.type = b2_staticBody;
-	base.position.Set(PIXEL_TO_METERS(242), PIXEL_TO_METERS(400));
+	base.position.Set(PIXEL_TO_METERS(244), PIXEL_TO_METERS(370));
 
 	//This is the box that limites the propeller movement
 	b2Body* propellerbase = world->CreateBody(&base);
 
 	b2PolygonShape anchor;
-	anchor.SetAsBox(PIXEL_TO_METERS(19) * 0.5f, PIXEL_TO_METERS(19) * 0.5f);
+	anchor.SetAsBox(PIXEL_TO_METERS(20) * 0.5f, PIXEL_TO_METERS(20) * 0.5f);
 
 	b2FixtureDef fixture2;
 	fixture2.shape = &anchor;
 	propellerbase->CreateFixture(&fixture2);
 
 	//Prismatic joint to chain the propeller with the propellerbase
+
 
 	b2PrismaticJointDef prismaticJointDef;
 	prismaticJointDef.bodyA = propeller;
@@ -74,16 +75,10 @@ bool ModulePhysics::Start()
 	prismaticJointDef.localAnchorA.Set(0, 0);
 	prismaticJointDef.localAnchorB.Set(0, 0);
 
-	//Joints limits
 	prismaticJointDef.enableLimit = true;
-	prismaticJointDef.lowerTranslation = 0;
-	prismaticJointDef.upperTranslation = 0.5;
+	prismaticJointDef.lowerTranslation = 10;
+	prismaticJointDef.upperTranslation = 10;
 
-	//Joint motor
-	prismaticJointDef.enableMotor = motor;
-	prismaticJointDef.maxMotorForce = 50;
-	prismaticJointDef.motorSpeed = 30;
-	
 
 	world->CreateJoint(&prismaticJointDef);
 
@@ -131,15 +126,6 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	pbody->width = pbody->height = radius;
 
 	return pbody;
-}
-
-void ModulePhysics::LaunchPropeller(bool Propellermotor)	//This function activates the Propeller Joint motor
-{
-	if (Propellermotor == true)
-	{
-		motor = true;
-
-	}
 }
 
 PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
