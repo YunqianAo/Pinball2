@@ -39,6 +39,8 @@ bool ModuleSceneIntro::Start()
 	hitboxd.add(App->physics->CreateChain(0, 0, hitbox6, 70));
 	hitboxe.add(App->physics->CreateChain(0, 0, hitbox7, 8));
 	hitboxf.add(App->physics->CreateChain(0, 0, hitbox8, 8));
+	hitboxg.add(App->physics->CreateChain(0, 0, hitbox9, 32));
+	hitboxh.add(App->physics->CreateChain(0, 0, hitbox10, 36));
 
 	rectangles.add(App->physics->CreateRectangle(103, 403, 25, 7));
 	flickerA = rectangles.getLast()->data;
