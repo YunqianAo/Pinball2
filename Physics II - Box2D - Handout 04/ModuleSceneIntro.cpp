@@ -38,12 +38,6 @@ bool ModuleSceneIntro::Start()
 	hitboxd.add(App->physics->CreateChain(0, 0, hitbox6, 70));
 	hitboxe.add(App->physics->CreateChain(0, 0, hitbox7, 8));
 	hitboxf.add(App->physics->CreateChain(0, 0, hitbox8, 8));
-
-	
-	circles.add(App->physics->CreateCircle(242, 350, 8));
-	ball = circles.getLast()->data;
-	//circles.getLast()->data->listener = this;
-
 	return ret;
 }
 
@@ -58,6 +52,7 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+<<<<<<< HEAD
 	
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
@@ -72,6 +67,31 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	/*
+=======
+	graphics = App->textures->Load("pinball/Ball_PNG.png");
+	App->renderer->Blit(background, 0, 0, NULL, 1.0f);
+
+	if (createball == true)
+	{
+		player = App->physics->CreateCircle(245, 380, 7);
+		player->listener = App->scene_intro;
+		b2Filter b;
+		b.categoryBits = ON;
+		b.maskBits = ON | OFF;
+		player->body->GetFixtureList()->SetFilterData(b);
+		createball = false;
+	}
+	player->body->SetBullet(true);
+
+	if ((player->body->GetPosition().x > 364) && (player->body->GetPosition().y > 280)) //sets restitution only if ball has departed
+	{
+		player->body->GetFixtureList()->SetRestitution(0.3);
+	}
+
+	int playerPositionX, playerPositionY;
+	player->GetPosition(playerPositionX, playerPositionY);
+	App->renderer->Blit(graphics, playerPositionX, playerPositionY, NULL, 1.0f, player->GetRotation());
+>>>>>>> 88958cc18d954cf6bbfd45fa22772d33c5b135b0
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
@@ -79,13 +99,14 @@ update_status ModuleSceneIntro::Update()
 		ray.y = App->input->GetMouseY();
 	}
 
-	*/
-
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 8));
 		circles.getLast()->data->listener = this;
 	}
+
+	
+
 	
 
 	// Prepare for raycast ------------------------------------------------------
